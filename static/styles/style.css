@@ -11,7 +11,7 @@ body{
 
 #content {
 	position:relative;
-    width: 70%;
+    width: 80em;
     min-height: 300px;
     margin: auto;
     padding: 10px;
@@ -190,4 +190,24 @@ body{
     display:block;
     width: 100%;
     margin-bottom: 5px;
+}
+
+
+
+
+
+
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.columns-container { position: relative; }
+
+.left-column { margin-bottom: .5em; }
+
+
+@media screen and (min-width: 47.5em ) {
+    .left-column { margin-right: 40.0em; }
+    .right-column { position: absolute; top: 0; right: 0; width: 40.0em; }   
 }

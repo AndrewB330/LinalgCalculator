@@ -1,5 +1,5 @@
 var size = 3;
-var max_size = 9;
+var max_size = 11;
 var data = zero_matrix(max_size);
 
 function zero_matrix(size) {
