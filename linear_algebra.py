@@ -83,13 +83,11 @@ def jordan_form(in_mat):
     # returns J and C
     n,m = in_mat.shape
     C = []
-    eigenvalues = []
     # TODO: find all eigenvalues of provided matrix!!
     for value in range(-50,50):
         B = in_mat - value*to_fraction(np.identity(n))
         if rank_m(B) == n:
             continue
-        eigenvalues.append(value)
         all_sols = []
         current_system = B
         prev_dim = 0
