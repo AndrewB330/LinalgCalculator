@@ -9,6 +9,37 @@ body{
 	position:relative;
 }
 
+nav {
+	position: fixed;
+	top:0px;
+	left:0px;
+	width:100%;
+	height: 32px;
+	background: #202020;
+	z-index: 100;
+}
+
+nav > a {
+    font-weight:bold;
+	font-size: 18px;
+	padding: 0px 20px;
+	float: left;
+	line-height: 32px;
+	height: 32px;
+	color: white;
+	text-decoration: none;
+	display: block;
+	background: #202020;
+}
+
+nav > a:hover {
+	background: #505050;
+}
+
+nav > a:active {
+	background: #909090;
+}
+
 #content {
 	position:relative;
     width: 80em;
@@ -30,6 +61,10 @@ body{
     border-right:1px solid #666;
 }
 
+.number {
+	font-size: 20px;
+}
+
 .first-char{
     color:#F22;
 }
@@ -38,11 +73,15 @@ body{
     padding: 0px;
     line-height: 25px;
     font-size: 14px;
-    display: block;
+	display: inline-block;
     height: 25px;
-    width: 35px;
+    min-width: 35px;
     border:1px solid #DDF;
     text-align:center;
+}
+
+input.matrix-cell {
+	width: 35px;
 }
 
 .output{
@@ -52,7 +91,6 @@ body{
     font-size: 14px;
     display: block;
     height: 25px;
-    width: 35px;
     border: 0px;
 }
 

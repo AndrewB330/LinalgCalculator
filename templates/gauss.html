@@ -1,0 +1,25 @@
+<div class="header"><span class="first-char">G</span>aussian elimination calculator</div>
+
+<div id="block" class="columns-container">
+    <div class="left-column">
+        <div class="controls">
+            <button class="white-button control" onclick="resize_input(+1)">+</button>
+            <div id="size" class="control">3x3</div>
+            <button class="white-button control" onclick="resize_input(-1)">-</button>
+            <button class="white-button control" onclick="identity()">Identity</button>
+            <button class="white-button control" onclick="fill(0)">Zeros</button>
+            <button class="white-button control" onclick="fill(1)">Ones</button>
+            <button class="white-button control" onclick="sample()">Sample</button>
+            <button class="red-button control" onclick="calculate_gauss()">Calculate</button>
+        </div>
+        <table id="input-matrix" class="matrix">
+        </table>
+    </div>
+    <div class="right-column">
+        <div class="controls">
+            <div id="message" class="control"></div>
+        </div>
+        <table id="output-matrix" class="matrix">
+        </table>
+    </div>
+</div>

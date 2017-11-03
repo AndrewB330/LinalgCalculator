@@ -105,18 +105,70 @@ function sample()
     rebuild_matrix();
 }
 
-function calculate()
+function calculate_jordan()
 {
     set_status(true);
     $("#message").empty().append("Calculation...");
     var subdata = []
     for(var i = 0; i < size;i++)
         subdata.push(data[i].slice(0,size));
-    $.getJSON('/calculate', {
+    $.getJSON('/calculate_jordan', {
           "matrix": subdata,
           "size": size
     }, function(data) {
         set_matrix("output-matrix",data.matrix);
+        $("#message").empty().append(data.message);
+        set_status(data.ok);
+    });
+}
+
+function calculate_inverse()
+{
+    set_status(true);
+    $("#message").empty().append("Calculation...");
+    var subdata = []
+    for(var i = 0; i < size;i++)
+        subdata.push(data[i].slice(0,size));
+    $.getJSON('/calculate_inverse', {
+          "matrix": subdata,
+          "size": size
+    }, function(data) {
+        set_matrix("output-matrix",data.matrix);
+        $("#message").empty().append(data.message);
+        set_status(data.ok);
+    });
+}
+
+function calculate_gauss()
+{
+    set_status(true);
+    $("#message").empty().append("Calculation...");
+    var subdata = []
+    for(var i = 0; i < size;i++)
+        subdata.push(data[i].slice(0,size));
+    $.getJSON('/calculate_gauss', {
+          "matrix": subdata,
+          "size": size
+    }, function(data) {
+        set_matrix("output-matrix",data.matrix);
+        $("#message").empty().append(data.message);
+        set_status(data.ok);
+    });
+}
+
+
+function calculate_determinant()
+{
+    set_status(true);
+    $("#message").empty().append("Calculation...");
+    var subdata = []
+    for(var i = 0; i < size;i++)
+        subdata.push(data[i].slice(0,size));
+    $.getJSON('/calculate_determinant', {
+          "matrix": subdata,
+          "size": size
+    }, function(data) {
+		$("#output-number").html('Det = ' + data.result);
         $("#message").empty().append(data.message);
         set_status(data.ok);
     });

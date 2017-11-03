@@ -1,0 +1,23 @@
+<div class="header"><span class="first-char">D</span>eterminant calculator</div>
+<div id="block" class="columns-container">
+    <div class="left-column">
+        <div class="controls">
+            <button class="white-button control" onclick="resize_input(+1)">+</button>
+            <div id="size" class="control">3x3</div>
+            <button class="white-button control" onclick="resize_input(-1)">-</button>
+            <button class="white-button control" onclick="identity()">Identity</button>
+            <button class="white-button control" onclick="fill(0)">Zeros</button>
+            <button class="white-button control" onclick="fill(1)">Ones</button>
+            <button class="white-button control" onclick="sample()">Sample</button>
+            <button class="red-button control" onclick="calculate_determinant()">Calculate</button>
+        </div>
+        <table id="input-matrix" class="matrix">
+        </table>
+    </div>
+    <div class="right-column">
+        <div class="controls">
+            <div id="message" class="control"></div>
+        </div>
+        <div id="output-number" class="number">Det = 0</div>
+    </div>
+</div>

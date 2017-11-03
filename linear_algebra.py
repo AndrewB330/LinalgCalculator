@@ -1,13 +1,15 @@
 from fractions import Fraction
 import numpy as np
-
+import operator
+import functools
 
 to_fraction = np.vectorize(lambda x: Fraction(x))
 to_decimal = np.vectorize(lambda x: float(x))
 
 
-def gauss_elim(in_mat, return_rank=False):
+def gauss_elim(in_mat, return_rank=False,return_det=False):
     # gauss elimination
+    det = 1
     n,m = in_mat.shape
     mat = in_mat.copy()
     rank = 0
@@ -24,8 +26,15 @@ def gauss_elim(in_mat, return_rank=False):
             if row == rank: continue
             multiplier = mat[row][col]/mat[rank][col]
             mat[row, :] -= multiplier*mat[rank, :]
+        det *= mat[rank][col]
         mat[rank, :] /= mat[rank][col]
         rank += 1
+    if rank!=len(mat) or mat.shape[0]!=mat.shape[1]:
+        det = Fraction(0)
+    if return_det and return_rank:
+        return mat, rank, det
+    if return_det:
+        return mat, det
     if return_rank:
         return mat, rank
     return mat
@@ -34,6 +43,11 @@ def gauss_elim(in_mat, return_rank=False):
 def change_basis(mat,basis):
     # A = C^-1 * B * C
     return inverse_m(basis).dot(mat).dot(basis)
+
+
+def det_m(mat):
+    _,det = gauss_elim(mat,return_det=True)
+    return det
 
 
 def stack_m(mats):
