@@ -1,7 +1,5 @@
 from fractions import Fraction
 import numpy as np
-import operator
-import functools
 
 to_fraction = np.vectorize(lambda x: Fraction(x))
 to_decimal = np.vectorize(lambda x: float(x))
@@ -168,7 +166,6 @@ if __name__ == '__main__':
          [0, 0, 0, 0, -1, 0, 0, 0, 1, 0],
          [0, 0, 0, -1, 0, 0, -2, 0, 0, 1]]))
     test = change_basis(test, basis)
-    test = to_fraction([[0, 0],[0, 0]])
     J, C = jordan_form(test)
     for a,b in zip(to_decimal(test), to_decimal(J)):
         print(a, ' --> ', b)

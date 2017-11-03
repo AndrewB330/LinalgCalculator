@@ -43,10 +43,15 @@ nav > a:active {
 #content {
 	position:relative;
     width: 80em;
-    min-height: 300px;
+    height: 100%;
     margin: auto;
     padding: 10px;
     padding-top: 50px;
+}
+
+#footer {
+	position:absolute;
+	bottom:0px;
 }
 
 #input-matrix{
