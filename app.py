@@ -48,7 +48,7 @@ def calculate_inverse():
         matrix = to_fraction([request.args.getlist('matrix[{}][]'.format(i),) for i in range(size)])
         _,rank = gauss_elim(matrix, return_rank=True)
         if rank!=len(matrix):
-            return jsonify(matrix=[[0]*size]*size,message="Determinant = 0",ok=False)
+            return jsonify(matrix=[[0]*size]*size,message="No solution Det = 0",ok=False)
         M = inverse_m(matrix)
     except:
         return jsonify(matrix=[[0]*size]*size,message="Something went wrong :(",ok=False)

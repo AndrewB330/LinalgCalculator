@@ -1,23 +1,33 @@
-<div class="header"><span class="first-char">D</span>eterminant calculator</div>
-<div id="block" class="columns-container">
-    <div class="left-column">
-        <div class="controls">
-            <button class="white-button control" onclick="resize_input(+1)">+</button>
-            <div id="size" class="control">3x3</div>
-            <button class="white-button control" onclick="resize_input(-1)">-</button>
-            <button class="white-button control" onclick="identity()">Identity</button>
-            <button class="white-button control" onclick="fill(0)">Zeros</button>
-            <button class="white-button control" onclick="fill(1)">Ones</button>
-            <button class="white-button control" onclick="sample()">Sample</button>
-            <button class="red-button control" onclick="calculate_determinant()">Calculate</button>
-        </div>
-        <table id="input-matrix" class="matrix">
-        </table>
-    </div>
-    <div class="right-column">
-        <div class="controls">
+<div class="header"><span class="first-char">I</span>nverse matrix calculator</div>
+
+<div class="columns-container">
+    <div class="left column">
+		<div class="control">
+		<button class="white-button subcontrol" onclick="resize_input(+1)">+</button>
+        <div id="size" class="subcontrol">3x3</div>
+        <button class="white-button subcontrol" onclick="resize_input(-1)">-</button>
+		</div>
+		<button class="white-button control" onclick="identity()">Identity</button>
+        <button class="white-button control" onclick="fill(0)">Zeros</button>
+        <button class="white-button control" onclick="fill(1)">Ones</button>
+        <button class="white-button control" onclick="sample1()">Sample #1</button>
+        <button class="white-button control" onclick="sample2()">Sample #2</button>
+        <button class="white-button control" onclick="random()">Random</button>
+        <button class="red-button control" onclick="calculate_number()">Calculate</button>
+		<div class="controls">
             <div id="message" class="control"></div>
         </div>
-        <div id="output-number" class="number">Det = 0</div>
+    </div>
+	<div class="middle column">
+		Input matrix:
+		<table id="input-matrix" class="matrix">
+        </table>
+		<button class="white-button control2" onclick="copy_data()">Copy</button>
+		<button class="white-button control2" onclick="paste()">Paste</button>
+	</div>
+    <div class="right column">
+		Result:
+		<div id="output-number" class="number">
+        </div>
     </div>
 </div>

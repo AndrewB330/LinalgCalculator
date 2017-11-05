@@ -42,11 +42,12 @@ nav > a:active {
 
 #content {
 	position:relative;
-    width: 80em;
-    height: 100%;
+    width: 87em;
     margin: auto;
     padding: 10px;
     padding-top: 50px;
+	display: table;
+	padding-bottom: 60px;
 }
 
 #footer {
@@ -54,16 +55,14 @@ nav > a:active {
 	bottom:0px;
 }
 
-#input-matrix{
-
-}
-
 .matrix {
-    margin:3px;
+    table-layout: fixed;
+    margin:0 auto;
     padding:5px;
     border-radius: 10px;
     border-left:1px solid #666;
     border-right:1px solid #666;
+	width: 95%;
 }
 
 .number {
@@ -74,19 +73,24 @@ nav > a:active {
     color:#F22;
 }
 
+td {
+	width: 10%;
+	padding: 0;
+	margin: 0;
+}
+
 .matrix-cell{
     padding: 0px;
     line-height: 25px;
     font-size: 14px;
-	display: inline-block;
     height: 25px;
-    min-width: 35px;
     border:1px solid #DDF;
     text-align:center;
+	overflow: hidden;
 }
 
 input.matrix-cell {
-	width: 35px;
+	width: 100%;
 }
 
 .output{
@@ -101,6 +105,13 @@ input.matrix-cell {
 
 .zero{
     font-weight:normal;
+}
+
+.enabled {
+}
+
+.disabled {
+	background-color: #EEE;
 }
 
 .header{
@@ -204,11 +215,6 @@ input.matrix-cell {
 	top:1px;
 }
 
-#block {
-	position:relative;
-    min-height: 320;
-}
-
 #size {
     font-weight: bold;
     height:29px;
@@ -216,14 +222,27 @@ input.matrix-cell {
 }
 
 .control {
-    margin:0 2px;
-    float:left;
+	display: inline-block;
+    margin:2px 0 0 0;
+	width: 96%;
+}
+
+.control2 {
+	display: inline-block;
+    margin:2px 0 0 0;
+	width: 48%;
+}
+
+.subcontrol {
+	margin: 0 0px 0 0;
+	float: left;
+	width: 33.3%;
+	text-align: center;
 }
 
 #message {
     font-weight: bold;
     height:29px;
-    line-height:29px;
 }
 
 .header-2{
@@ -235,22 +254,27 @@ input.matrix-cell {
     margin-bottom: 5px;
 }
 
-
-
-
-
-
-
-*, *:before, *:after {
-  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+.columns-container {
+	width: 100%;
 }
 
-.columns-container { position: relative; }
+.column {
+	float:left;
+	height: 100%;
+	text-align: center;
+	font-weight: bold;
+}
 
-.left-column { margin-bottom: .5em; }
+.left {
+	width: 10%;
+	//border-right: 1px solid #d5dddf;
+}
 
+.middle {
+	width: 45%;
+	//border-right: 1px solid #d5dddf;
+}
 
-@media screen and (min-width: 47.5em ) {
-    .left-column { margin-right: 40.0em; }
-    .right-column { position: absolute; top: 0; right: 0; width: 40.0em; }   
+.right {
+	width: 45%;
 }
