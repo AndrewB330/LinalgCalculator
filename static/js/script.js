@@ -269,6 +269,7 @@ function select_calculator(ncalculator, noutput_type) {
 		);
 		$('#size-square').show();
 		$('#size-rectangle').hide();
+		set_size(width, width);
 	}
 	if (calculator == 'determinant')
 		$('#calculator-name').empty().append(first_letter_color('Determinant calculator'));
