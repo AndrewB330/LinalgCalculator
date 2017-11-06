@@ -12,10 +12,10 @@
     <body>
         <nav>
             <a href="\"><span class="first-char">L</span>inalgCalculator</a>
-			<a onclick="select_calculator('determinant','number')">Determinant</a>
-			<a onclick="select_calculator('inverse','matrix-square')">Inverse matrix</a>
-			<a onclick="select_calculator('jordan','matrix-square')">Jordan form</a>
-			<a onclick="select_calculator('gauss','matrix-rectangle')">System of linear equations</a>
+			<a class="nav-tab" id="inverse" onclick="select_calculator('inverse','matrix-square')">Inverse matrix</a>
+			<a class="nav-tab" id="jordan" onclick="select_calculator('jordan','matrix-square')">Jordan form</a>
+			<a class="nav-tab" id="gauss" onclick="select_calculator('gauss','matrix-rectangle')">System of linear equations</a>
+			<a class="nav-tab" id="determinant" onclick="select_calculator('determinant','number')">Determinant</a>
         </nav>
         <div id="content">
             {% include 'calculator.html' %}

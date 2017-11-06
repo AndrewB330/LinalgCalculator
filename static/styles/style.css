@@ -33,10 +33,12 @@ nav > a {
 }
 
 nav > a:hover {
+	cursor: pointer;
 	background: #505050;
 }
 
 nav > a:active {
+	cursor: pointer;
 	background: #909090;
 }
 
@@ -280,4 +282,13 @@ input.matrix-cell {
 
 .numerator {
 	text-decoration: underline;
+}
+
+.active {
+	background-color: #FFF;
+	color: #000;
+}
+
+.active:hover, .active:active {
+	background-color: #FFF !important;
 }

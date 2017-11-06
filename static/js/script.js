@@ -237,6 +237,13 @@ function first_letter_color(text, color) {
 function select_calculator(ncalculator, noutput_type) {
 	output_type = noutput_type;
 	calculator = ncalculator;
+	
+    var tabs = document.getElementsByClassName("nav-tab");
+    for (var i = 0; i < tabs.length; i++) {
+        tabs[i].className = tabs[i].className.replace(' active','');
+    }
+    document.getElementById(calculator).className += ' active'
+	
 	if (output_type == 'matrix-square')
 	{
 		$('#output').empty().append(
