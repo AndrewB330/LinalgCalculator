@@ -267,6 +267,8 @@ function select_calculator(ncalculator, noutput_type) {
 		$('#output').empty().append(
 		'Result:<div id="output-number" class="number">???</div>'
 		);
+		$('#size-square').show();
+		$('#size-rectangle').hide();
 	}
 	if (calculator == 'determinant')
 		$('#calculator-name').empty().append(first_letter_color('Determinant calculator'));
