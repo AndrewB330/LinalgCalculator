@@ -1,7 +1,8 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+        <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static',filename='js/script.js') }}"></script>
 </head>
 <body>
@@ -11,13 +12,13 @@
     <body>
         <nav>
             <a href="\"><span class="first-char">L</span>inalgCalculator</a>
-			<a href="\det">Determinant</a>
-			<a href="\inv">Inverse matrix</a>
-			<a href="\jor">Jordan form</a>
-			<a href="\gau">Gauss elimination</a>
+			<a onclick="select_calculator('determinant','number')">Determinant</a>
+			<a onclick="select_calculator('inverse','matrix-square')">Inverse matrix</a>
+			<a onclick="select_calculator('jordan','matrix-square')">Jordan form</a>
+			<a onclick="select_calculator('gauss','matrix-rectangle')">System of linear equations</a>
         </nav>
         <div id="content">
-            {% include page %}
+            {% include 'calculator.html' %}
             {% include 'footer.html' %}
         </div>
     </body>

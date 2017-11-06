@@ -107,13 +107,6 @@ input.matrix-cell {
     font-weight:normal;
 }
 
-.enabled {
-}
-
-.disabled {
-	background-color: #EEE;
-}
-
 .header{
     font-size: 22px;
     font-weight: bold;
@@ -215,7 +208,7 @@ input.matrix-cell {
 	top:1px;
 }
 
-#size {
+#size, #size-width, #size-height {
     font-weight: bold;
     height:29px;
     line-height:29px;
@@ -277,4 +270,14 @@ input.matrix-cell {
 
 .right {
 	width: 45%;
+}
+
+.numerator,.denominator {
+	height: 50%;
+	font-size: 12px;
+	line-height: 12px;
+}
+
+.numerator {
+	text-decoration: underline;
 }
