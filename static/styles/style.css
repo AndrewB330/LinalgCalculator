@@ -75,6 +75,10 @@ nav > a:active {
     color:#F22;
 }
 
+tr {
+    width: 100%;
+}
+
 td {
 	width: 10%;
 	padding: 0;
@@ -112,7 +116,7 @@ input.matrix-cell {
 .header{
     font-size: 22px;
     font-weight: bold;
-    display:block;
+    display:table;
     width: 100%;
     border-bottom: 1px solid #d5dddf;
     margin-bottom: 5px;
@@ -251,6 +255,7 @@ input.matrix-cell {
 
 .columns-container {
 	width: 100%;
+    display:table;
 }
 
 .column {
@@ -291,4 +296,8 @@ input.matrix-cell {
 
 .active:hover, .active:active {
 	background-color: #FFF !important;
+}
+
+input:disabled {
+    color: #999999;
 }

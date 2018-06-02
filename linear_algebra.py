@@ -1,8 +1,11 @@
 from fractions import Fraction
+from math import atan, sin, cos, pi, gcd, sqrt
 import numpy as np
 
 to_fraction = np.vectorize(lambda x: Fraction(x))
 to_decimal = np.vectorize(lambda x: float(x))
+
+MAGIC_NUMBER = 2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31
 
 
 def gauss_elim(in_mat, return_rank=False, return_det=False):
@@ -144,6 +147,32 @@ def jordan_form(in_mat):
 
 def equals(a, b):
     return np.all(a == b)
+
+
+def eignvalues_approximately(mat, return_history = False):
+    # TODO: Only for diagonal for now
+    if mat.shape[0] != mat.shape[1]:
+        return []
+    n = mat.shape[0]
+    matrices = []
+    while True:
+        abs_without_diagonal = np.abs(mat - mat.diagonal() * np.identity(n))
+        if abs_without_diagonal.max() < 1e-6:
+            break
+        i, j = np.unravel_index(np.argmax(abs_without_diagonal), mat.shape)
+        angle = pi / 4 if mat[i, j] > 0 else -pi / 4
+        if mat[i, i] != mat[j, j]:
+            angle = 1 / 2 * atan((2 * mat[i, j]) / (mat[i, i] - mat[j, j]))
+        u = np.identity(n)
+        u[i, i] = u[j, j] = cos(angle)
+        u[i, j] = -sin(angle)
+        u[j, i] = sin(angle)
+        mat = u.T.dot(mat).dot(u)
+        matrices.append((mat[:, :], (i, j)))
+    res = sorted(mat.diagonal())
+    if return_history:
+        return res, matrices
+    return res
 
 
 if __name__ == '__main__':

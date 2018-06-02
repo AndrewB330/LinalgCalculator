@@ -5,14 +5,20 @@ var data = zero_matrix(max_size, max_size);
 var result = zero_matrix(max_size, max_size);
 
 var calculator = 'inverse';
+var input_type = 'matrix-square';
 var output_type = 'matrix-square';
 
 var color_main_1 = '#FFFFFF';
 var color_main_2 = '#F9F9F9';
 var color_disabled = '#EEEEEE';
 var color_special = '#BBFF99';
+var color_symmetric = '#dae0ef';
+var selected_color = '#FFBB99';
 
-var colorizer = function(i,j){return (i<height && j<width?((i+j)%2==0?color_main_1:color_main_2):color_disabled);}
+var selected_x = -1;
+var selected_y = -1;
+
+var debug = true;
 
 function zero_matrix(width, height) {
     var data = [], row = [];
@@ -47,10 +53,8 @@ function getId(i,j) {
 }
 
 function identity() {
-    for(var i = 0; i < max_size; i++)
-    {
-		for(var j = 0; j < max_size; j++)
-        {
+    for(var i = 0; i < max_size; i++) {
+		for(var j = 0; j < max_size; j++) {
 			data[i][j] = (i==j?1:0) ;
         }
 	}		
@@ -58,10 +62,8 @@ function identity() {
 }
 
 function random() {
-	for(var i = 0; i < max_size; i++)
-	{
-		for(var j = 0; j < max_size; j++)
-        {
+	for(var i = 0; i < max_size; i++) {
+		for(var j = 0; j < max_size; j++) {
             data[i][j] = Math.floor((Math.random() * 10) - 5); 
         }    
 	}
@@ -79,12 +81,34 @@ function enabled(i,j) {
 	return i<height && j<width;
 }
 
-function variables_row()
-{
+
+function changed(i,j) {
+    if (input_type == 'matrix-diagonal' && enabled(i,j)) {
+        setTimeout(function(i,j) {
+            data[j][i] = data[i][j];
+            $('#'+getId(j,i)).val(data[j][i]);
+        },5,i,j);
+    }
+}
+
+
+function colorizer(i,j) {
+    if (!enabled(i,j)) {
+        return color_disabled;
+    }
+    if (calculator == 'gauss')
+		return (j==width-1?color_special:((i+j)%2==0?color_main_1:color_main_2));
+    if (input_type == 'matrix-diagonal' && i == j)
+        return color_symmetric;
+    if (selected_x == j && selected_y == i)
+        return selected_color;
+    return ((i+j)%2==0?color_main_1:color_main_2);
+}
+
+function variables_row() {
 	var row = '';
 	row += '<tr>';
-	for (var j = 0; j < max_size; j++)
-	{
+	for (var j = 0; j < max_size; j++) {
 		row += '<td>';
 		row += '<div class="matrix-cell output" >'+(j<width-1?'x'+(j+1):(j==width-1?'C':''))+'</div>';
 		row += '</td>';
@@ -97,13 +121,12 @@ function rebuild_matrix() {
     $("#message").empty();
     var content = ''
 	if (calculator == 'gauss') content+=variables_row();
-    for(var i = 0; i < max_size; i++)
-    {
+    for(var i = 0; i < max_size; i++) {
         content += '<tr>';
-        for(var j = 0; j < max_size; j++)
-        {
+        for(var j = 0; j < max_size; j++) {
+            changed(i,j);
             content += '<td>';
-            content += '<input style="background-color:'+colorizer(i,j)+'" class="matrix-cell" id="'+getId(i,j)+'" value="'+(enabled(i,j)?data[i][j]:0)+'" '+(enabled(i,j)?'':'disabled')+'/>';
+            content += '<input style="background-color:'+colorizer(i,j)+'" class="matrix-cell" id="'+getId(i,j)+'" value="'+(enabled(i,j)?data[i][j]:0)+'" '+(enabled(i,j)?'':'disabled')+' onchange="changed('+i+','+j+')"/>';
             content += '</td>';
         }
         content += '</tr>';
@@ -128,11 +151,9 @@ function set_matrix(id,data) {
 	result = data;
     var content = '';
 	if (calculator == 'gauss') content+=variables_row();
-    for(var i = 0; i < max_size; i++)
-    {
+    for(var i = 0; i < max_size; i++)  {
         content += '<tr>';
-        for(var j = 0; j < max_size; j++)
-        {
+        for(var j = 0; j < max_size; j++) {
             content += '<td>';
             if (enabled(i,j) && data[i][j]!=0)
                 content += '<a style="background-color:'+colorizer(i,j)+'" class="matrix-cell output '+(enabled(i,j)?'enabled':'disabled')+'" >'+format_fraction(data[i][j])+'</a>';
@@ -173,16 +194,14 @@ function paste() {
 	set_size(nwidth, nheight);
 }
 
-function set_status(ok)
-{
+function set_status(ok) {
     if (ok)
         $("#message").css({color:"#494"});
     else
         $("#message").css({color:"#944"});
 }
 
-function sample1()
-{
+function sample1() {
     set_size(4, 4);
     fill(0);
     x = [[0,1,0,0],[11,6,-4,-4],[22,15,-8,-9],[-3,-2,1,2]];
@@ -192,8 +211,7 @@ function sample1()
     rebuild_matrix();
 }
 
-function sample2()
-{
+function sample2() {
 	set_size(6, 6);
     fill(0);
     x = [[-2,0,0,0,1,0],[0,2,1,0,0,2],[0,0,2,1,0,0],[1,0,0,2,2,0],[0,0,0,0,-3,1],[0,0,0,0,0,-3]];
@@ -203,8 +221,12 @@ function sample2()
     rebuild_matrix();
 }
 
-function calculate()
-{
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
+
+function calculate() {
     set_status(true);
     $("#message").empty().append("Calculation...");
     var subdata = []
@@ -215,15 +237,29 @@ function calculate()
           "width": width,
 		  "height": height
     }, function(data) {
-		if (output_type == 'matrix-square' || output_type == 'matrix-rectangle')
-        {
+		if (output_type == 'matrix-square' || output_type == 'matrix-rectangle') {
 			set_matrix("output-matrix",data.matrix);
 			$("#message").empty().append(data.message);
 		}
-		if (output_type == 'number')
-		{
+		if (output_type == 'number') {
 			$("#output-number").html(data.prefix + data.result);
 			$("#message").empty().append(data.message);
+		}
+		if (debug && data.history) {
+		    $('#debug').html('');
+		    for (var i = 0; i < data.history.length; i++) {
+		        var matrix = data.history[i][0];
+		        selected_x = data.history[i][1][0];
+		        selected_y = data.history[i][1][1];
+				var s = '';
+				for (var j = 0; j < matrix.length; j++) {
+					s+= matrix[j] + '\\\\\n';
+				}
+				console.log(s.replaceAll(',',' & '));
+		        $('#debug').append('<table id="matrix-' + i + '" class="matrix" ></table>');
+		        set_matrix('matrix-'+i, matrix);
+		        selected_x = selected_y = -1;
+		    }
 		}
         set_status(data.ok);
     });
@@ -234,7 +270,9 @@ function first_letter_color(text, color) {
 }
 
 
-function select_calculator(ncalculator, noutput_type) {
+function select_calculator(ncalculator, ninput_type, noutput_type) {
+    $('#debug').html('');
+    input_type = ninput_type;
 	output_type = noutput_type;
 	calculator = ncalculator;
 	
@@ -243,48 +281,43 @@ function select_calculator(ncalculator, noutput_type) {
         tabs[i].className = tabs[i].className.replace(' active','');
     }
     document.getElementById(calculator).className += ' active'
-	
-	if (output_type == 'matrix-square')
-	{
-		$('#output').empty().append(
-		'Output matrix:<table id="output-matrix" class="matrix"></table><button class="white-button control" onclick="copy_result()">Copy</button>'
-		);
-		$('#size-square').show();
-		$('#size-rectangle').hide();
-		set_size(width, width);
-	}
-	if (output_type == 'matrix-rectangle')
-	{
-		$('#output').empty().append(
-		'Output matrix:<table id="output-matrix" class="matrix"></table><button class="white-button control" onclick="copy_result()">Copy</button>'
-		);
+
+	if (input_type == 'matrix-rectangle') {
 		$('#size-square').hide();
 		$('#size-rectangle').show();
 		set_size(width, height);
-	}
-	if (output_type == 'number')
-	{
-		$('#output').empty().append(
-		'Result:<div id="output-number" class="number">???</div>'
-		);
+	} else {
+	    //matrix-square, matrix-diagonal
 		$('#size-square').show();
 		$('#size-rectangle').hide();
 		set_size(width, width);
+	}
+
+	if (output_type == 'matrix-square') {
+		$('#output').empty().append(
+		'Output matrix:<table id="output-matrix" class="matrix"></table><button class="white-button control" onclick="copy_result()">Copy</button>'
+		);
+	}
+	if (output_type == 'matrix-rectangle') {
+		$('#output').empty().append(
+		'Output matrix:<table id="output-matrix" class="matrix"></table><button class="white-button control" onclick="copy_result()">Copy</button>'
+		);
+	}
+	if (output_type == 'number') {
+		$('#output').empty().append(
+		'Result:<div id="output-number" class="number">???</div>'
+		);
 	}
 	if (calculator == 'determinant')
 		$('#calculator-name').empty().append(first_letter_color('Determinant calculator'));
 	if (calculator == 'jordan')
-		$('#calculator-name').empty().append(first_letter_color('Jordan normal form calculator'));
+		$('#calculator-name').empty().append(first_letter_color('Jordan normal form calculator (only small integer eignvalues)'));
 	if (calculator == 'inverse')
 		$('#calculator-name').empty().append(first_letter_color('Inverse matrix calculator'));
 	if (calculator == 'gauss')
 		$('#calculator-name').empty().append(first_letter_color('System of linear equations calculator'));
-	
-	
-	if (calculator == 'gauss')
-		colorizer = function(i,j){return (i<height && j<width?(j==width-1?color_special:((i+j)%2==0?color_main_1:color_main_2)):color_disabled);}
-	else 
-		colorizer = function(i,j){return (i<height && j<width?((i+j)%2==0?color_main_1:color_main_2):color_disabled);}
-	
+	if (calculator == 'eigenvalues')
+		$('#calculator-name').empty().append(first_letter_color('Eigenvalues calculator (approximately eps=1e-6, only symmetric matrix)'));
+
 	set_size(width, height);
 }
